@@ -9,13 +9,29 @@ export const addProduct = async (title, price, quantity) => {
   try {
     const response = await axios.post("/api/products", { title, price, quantity });
     if (response.status === 200) {
-      console.log('request successfull 200')
-      console.log(response);
       return response.data
     } else {
       console.log('request did not return a 200 for some reason');
+      return null;
     }
   } catch (error) {
     console.log("error catch block from addProduct", error);
   }
+}
+
+export const deleteProduct = async (productId) => {
+  try {
+    return await axios.delete(`/api/products/${productId}`);
+  } catch (error) {
+    console.log(error);
+  }
+
+  // router.delete("/products/:id", (req, res, next) => {
+  //   const productId = req.params.id;
+  //   Product.findByIdAndRemove(productId)
+  //     .then(() => {
+  //       res.json();
+  //     })
+  //     .catch((err) => next(err));
+  // });
 }

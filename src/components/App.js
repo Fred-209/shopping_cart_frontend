@@ -17,6 +17,7 @@ const App = () => {
   }, []);
 
   const handleAddProductClick = () => setShowProductForm(true);
+ 
 
   return (
     <div id='app'>
@@ -32,10 +33,10 @@ const App = () => {
       <main>
         <div className='product-listing'>
           <h2>Products</h2>
-          <ProductList products={products} />
+          <ProductList products={products} setProducts={setProducts} />
         </div>
         {showProductForm ? (
-          <AddProductForm />
+          <AddProductForm products={products} setProducts={setProducts}/>
         ) : (
           <p>
             <button className="add-product-button" onClick={handleAddProductClick}>Add A Product</button>

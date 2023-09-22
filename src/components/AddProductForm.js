@@ -1,15 +1,21 @@
 import { useState } from 'react';
 import { addProduct } from '../services/products';
-const AddProductForm = () => {
+
+const AddProductForm = ({products, setProducts}) => {
   const [productNameInput, setProductNameInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
   const [quantityInput, setQuantityInput] = useState('');
 
-  const handleAddProduct = (event) => {
+  const handleAddProduct = async (event) => {
     event.preventDefault();
-    addProduct(productNameInput, priceInput, quantityInput);
+    const newProduct = await addProduct(productNameInput, priceInput, quantityInput);
+    if (newProduct) {
+      setProducts(products.concat(newProduct));
+    } else {
+      console.log("something went horribly wrong with handleAddProduct");
+    }
   }
-  
+    
   const handleInputChange = (event) => {
     const eventId = event.target.id;
     const eventValue = event.target.value;
