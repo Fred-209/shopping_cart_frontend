@@ -1,7 +1,6 @@
 import Product from './Product'
 
-const ProductList = ({ products, setProducts }) => {
-  console.log("products in ProductList", { products });
+export const ProductList = ({ products, setProducts }) => {
   return (
     <ul className='product-list'>
       {products.map(product => {
@@ -18,5 +17,3 @@ const ProductList = ({ products, setProducts }) => {
     </ul>
   )
 }
-
-export default ProductList;

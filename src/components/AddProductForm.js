@@ -1,42 +1,52 @@
 import { useState } from 'react';
 import { addProduct } from '../services/products';
 
-const AddProductForm = ({products, setProducts}) => {
-  const [productNameInput, setProductNameInput] = useState('');
-  const [priceInput, setPriceInput] = useState('');
-  const [quantityInput, setQuantityInput] = useState('');
-
+export const AddProductForm = ({ products, setProducts }) => {
+  const [formInputs, setFormInputs] = useState({
+    name: '',
+    price: '',
+    quantity: '',
+  });
+ 
   const handleAddProduct = async (event) => {
+
+    const resetForm = () => {
+      setFormInputs({name: '', price: '', quantity: ''});
+    }
+
     event.preventDefault();
-    const newProduct = await addProduct(productNameInput, priceInput, quantityInput);
+    const newProduct = await addProduct(formInputs.name, formInputs.price, formInputs.quantity);
     if (newProduct) {
+      console.log(event)
       setProducts(products.concat(newProduct));
+      resetForm();
     } else {
       console.log("something went horribly wrong with handleAddProduct");
     }
   }
-    
+
   const handleInputChange = (event) => {
     const eventId = event.target.id;
     const eventValue = event.target.value;
-  
+
     if (eventId === 'product-name') {
-      setProductNameInput(eventValue);
+      setFormInputs({ ...formInputs, name: eventValue });
     } else if (eventId === 'product-price') {
-      setPriceInput(eventValue);
+      setFormInputs({ ...formInputs, price: eventValue });
 
     } else if (eventId === 'product-quantity') {
-      setQuantityInput(eventValue);
+      setFormInputs({ ...formInputs, quantity: eventValue });
     }
   }
 
   return (
-    <div className="add-form visible">  
+    <div className="add-form visible">
       <h3>Add Product</h3>
       <form>
         <div className="input-group">
           <label htmlFor="product-name">Product Name:</label>
           <input
+            value={formInputs.name}
             type="text"
             id="product-name"
             name="product-name"
@@ -47,6 +57,7 @@ const AddProductForm = ({products, setProducts}) => {
         <div className="input-group">
           <label htmlFor="product-price">Price:</label>
           <input
+            value={formInputs.price}
             type="number"
             id="product-price"
             name="product-price"
@@ -59,6 +70,7 @@ const AddProductForm = ({products, setProducts}) => {
         <div className="input-group">
           <label htmlFor="product-quantity">Quantity:</label>
           <input
+            value={formInputs.quantity}
             type="number"
             id="product-quantity"
             name="product-quantity"
@@ -72,9 +84,8 @@ const AddProductForm = ({products, setProducts}) => {
           <button type="button">Cancel</button>
         </div>
       </form>
-    </div>  
+    </div>
   );
 }
 
-export default AddProductForm;
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ProductList from './ProductList';
-import AddProductForm from './AddProductForm';
+import { ProductList } from './ProductList';
+import { AddProductForm } from './AddProductForm';
 import { getProducts } from '../services/products';
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
   }, []);
 
   const handleAddProductClick = () => setShowProductForm(true);
- 
+
 
   return (
     <div id='app'>
@@ -36,7 +36,7 @@ const App = () => {
           <ProductList products={products} setProducts={setProducts} />
         </div>
         {showProductForm ? (
-          <AddProductForm products={products} setProducts={setProducts}/>
+          <AddProductForm products={products} setProducts={setProducts} />
         ) : (
           <p>
             <button className="add-product-button" onClick={handleAddProductClick}>Add A Product</button>

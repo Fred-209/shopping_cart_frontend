@@ -25,13 +25,4 @@ export const deleteProduct = async (productId) => {
   } catch (error) {
     console.log(error);
   }
-
-  // router.delete("/products/:id", (req, res, next) => {
-  //   const productId = req.params.id;
-  //   Product.findByIdAndRemove(productId)
-  //     .then(() => {
-  //       res.json();
-  //     })
-  //     .catch((err) => next(err));
-  // });
 }
