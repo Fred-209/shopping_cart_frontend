@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { addProduct } from '../services/products';
 
-export const AddProductForm = ({ products, setProducts }) => {
+export const AddProductForm = ({ products, setProducts, setShowForm }) => {
   const [formInputs, setFormInputs] = useState({
     name: '',
     price: '',
     quantity: '',
   });
- 
+  
+  const resetForm = () => {
+    setFormInputs({name: '', price: '', quantity: ''});
+  }
+
+  const handleCancelClick = () => setShowForm(false);
+  
   const handleAddProduct = async (event) => {
-
-    const resetForm = () => {
-      setFormInputs({name: '', price: '', quantity: ''});
-    }
-
     event.preventDefault();
     const newProduct = await addProduct(formInputs.name, formInputs.price, formInputs.quantity);
     if (newProduct) {
@@ -29,13 +30,16 @@ export const AddProductForm = ({ products, setProducts }) => {
     const eventId = event.target.id;
     const eventValue = event.target.value;
 
-    if (eventId === 'product-name') {
-      setFormInputs({ ...formInputs, name: eventValue });
-    } else if (eventId === 'product-price') {
-      setFormInputs({ ...formInputs, price: eventValue });
-
-    } else if (eventId === 'product-quantity') {
-      setFormInputs({ ...formInputs, quantity: eventValue });
+    switch (eventId) {
+      case 'product-name':
+        setFormInputs({ ...formInputs, name: eventValue });
+        break;
+      case 'product-price':
+        setFormInputs({ ...formInputs, price: eventValue });
+        break;
+      case 'product-quantity':
+        setFormInputs({ ...formInputs, quantity: eventValue });
+        break;
     }
   }
 
@@ -81,7 +85,7 @@ export const AddProductForm = ({ products, setProducts }) => {
         </div>
         <div className="actions form-actions">
           <button type="submit" onClick={handleAddProduct}>Add</button>
-          <button type="button">Cancel</button>
+          <button type="button" onClick={handleCancelClick}>Cancel</button>
         </div>
       </form>
     </div>
