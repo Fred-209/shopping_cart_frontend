@@ -1,6 +1,6 @@
 import Product from './Product'
 
-export const ProductList = ({ products, setProducts }) => {
+export const ProductList = ({ products, setProducts, setCartItems }) => {
   return (
     <ul className='product-list'>
       {products.map(product => {
@@ -11,6 +11,7 @@ export const ProductList = ({ products, setProducts }) => {
           price={product.price}
           quantity={product.quantity}
           setProducts={setProducts}
+          setCartItems={setCartItems}
         />
       })}
     </ul>

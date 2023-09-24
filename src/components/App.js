@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ProductList } from './ProductList';
 import { AddProductForm } from './AddProductForm';
-import { getProducts } from '../services/products';
+import { getProducts, getCartItems } from '../services/products';
+import { Cart } from './Cart';
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [showProductForm, setShowProductForm] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -13,7 +15,13 @@ const App = () => {
       setProducts(productList);
     };
 
+    const fetchCartitems = async () => {
+      const cartItems = await getCartItems();
+      setCartItems(cartItems);
+    }
+
     fetchProducts();
+    fetchCartitems();
   }, []);
 
   const handleAddProductClick = () => setShowProductForm(true);
@@ -22,17 +30,12 @@ const App = () => {
     <div id='app'>
       <header>
         <h1>The Shop!</h1>
-        <div className='cart'>
-          <h2>Your Cart</h2>
-          <p>Your Cart is Empty</p>
-          <p>Total: $0</p>
-          <button className='checkout' disabled>Checkout</button>
-        </div>
+        <Cart items={cartItems} setItems={setCartItems}/>
       </header>
       <main>
         <div className='product-listing'>
           <h2>Products</h2>
-          <ProductList products={products} setProducts={setProducts} />
+          <ProductList products={products} setProducts={setProducts} setCartItems={setCartItems}/>
         </div>
         {showProductForm ? (
           <AddProductForm setProducts={setProducts} setShowForm={setShowProductForm} />
