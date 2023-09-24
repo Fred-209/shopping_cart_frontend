@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { addProduct } from '../services/products';
 
-export const AddProductForm = ({ products, setProducts, setShowForm }) => {
+export const AddProductForm = ({ setProducts, setShowForm }) => {
   const [formInputs, setFormInputs] = useState({
     name: '',
     price: '',
@@ -18,8 +18,7 @@ export const AddProductForm = ({ products, setProducts, setShowForm }) => {
     event.preventDefault();
     const newProduct = await addProduct(formInputs.name, formInputs.price, formInputs.quantity);
     if (newProduct) {
-      console.log(event)
-      setProducts(products.concat(newProduct));
+      setProducts(prevProducts => prevProducts.concat(newProduct));
       resetForm();
     } else {
       console.log("something went horribly wrong with handleAddProduct");

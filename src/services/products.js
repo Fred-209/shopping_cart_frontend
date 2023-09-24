@@ -26,3 +26,13 @@ export const deleteProduct = async (productId) => {
     console.log(error);
   }
 }
+
+export const updateProduct = async (id, title, price, quantity)  => {
+  try {
+    const response = await axios.put(`api/products/${id}`, {title, price, quantity});
+    return response.data;
+  } catch {
+    console.log(error);
+  }
+};
+  

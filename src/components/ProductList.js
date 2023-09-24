@@ -10,7 +10,6 @@ export const ProductList = ({ products, setProducts }) => {
           title={product.title}
           price={product.price}
           quantity={product.quantity}
-          products={products}
           setProducts={setProducts}
         />
       })}

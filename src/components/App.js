@@ -35,7 +35,7 @@ const App = () => {
           <ProductList products={products} setProducts={setProducts} />
         </div>
         {showProductForm ? (
-          <AddProductForm products={products} setProducts={setProducts} setShowForm={setShowProductForm} />
+          <AddProductForm setProducts={setProducts} setShowForm={setShowProductForm} />
         ) : (
           <p>
             <button className="add-product-button" onClick={handleAddProductClick}>Add A Product</button>
