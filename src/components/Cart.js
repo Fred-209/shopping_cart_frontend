@@ -1,13 +1,15 @@
 
-import { useEffect, useState } from 'react';
-import { getCartItems, clearCart } from '../services/products';
+import { clearCart } from '../services/products';
+
+const cartTotal = (items) => {
+  const total =  items.reduce((sum, item) => {
+    return sum + (item.price * item.quantity);
+  }, 0);
+  return total;
+};
 
 export const Cart = ({items, setItems}) => {
   
-  const cartTotal = () => {
-    return items.reduce((sum, item) => sum + parseFloat(item.price), 0.00).toFixed(2);
-  };
-
   const handleCheckout = async (event) => {
     await clearCart();
     setItems([]);
@@ -35,8 +37,8 @@ export const Cart = ({items, setItems}) => {
               </tr>
             </thead>
             <tbody>
-              {items.map((item, index) => (
-                <tr key={index}>
+              {items.map(item => (
+                <tr key={item._id}>
                   <td>{item.title}</td>
                   <td>{item.quantity}</td>
                   <td>${item.price}</td>
@@ -46,7 +48,7 @@ export const Cart = ({items, setItems}) => {
             <tfoot>
               <tr>
                 <td colSpan="3" className="total">
-                  Total: ${cartTotal()}
+                  Total: ${cartTotal(items)}
                 </td>
               </tr>
             </tfoot>

@@ -26,6 +26,7 @@ const Product = ({ id, title, price, quantity, setProducts, setCartItems }) => {
   };
 
   const handleAddToCart = async (event) => {
+    event.preventDefault()
     const productAndItem = await addCartItem(id);
     const alteredProduct = productAndItem.product;
     const alteredItem = productAndItem.item;
@@ -36,15 +37,19 @@ const Product = ({ id, title, price, quantity, setProducts, setCartItems }) => {
       newProducts[oldProductIndex] = alteredProduct;
       return newProducts;
     });
+
     setCartItems(prevCartItems => {
       const oldItemIndex = prevCartItems.findIndex(item => item._id == alteredItem._id);
       if (oldItemIndex === -1) {
         return prevCartItems.concat(alteredItem);
-      } else {
-        const newCartItems = [...prevCartItems];
-        newCartItems[oldItemIndex] = alteredItem;
-        return newCartItems;
       }
+      return prevCartItems.map(item => {
+        if (item._id === alteredItem._id) {
+          return alteredItem;
+        } else {
+          return item;
+        }
+      });
     });
   }
 
